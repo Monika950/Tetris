@@ -13,7 +13,7 @@ class App:
 
     def update(self):
         self.tetris.update()
-        self.clock.tick(FPS)
+        self.clock.tick(2)
 
     def draw(self):
         self.screen.fill(color=FIELD_COLOR)
