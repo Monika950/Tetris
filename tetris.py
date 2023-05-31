@@ -2,6 +2,18 @@ from settings import *
 from tetromino import Tetromino
 import math
 
+class Text:
+    def __init__(self,app):
+        self.app=app
+        self.font = pg.font.SysFont('Comic Sans MS',int(TILE_SIZE*1.5))
+    def draw(self):
+        img1 = self.font.render('TETRIS',True,'white')
+        img2 = self.font.render('NEXT',True,'white')
+        img3 = self.font.render('SCORE',True,'white')
+        img4 = self.font.render('000',True,'white')
+        self.app.screen.blit(img1,(WIN_W*0.625, WIN_H*0.025))
+        self.app.screen.blit(img2,(WIN_W*0.67, WIN_H*0.2))
+        self.app.screen.blit(img3,(WIN_W*0.625, WIN_H*0.6))
 
 class Tetris:
     def __init__(self,app):
@@ -35,13 +47,21 @@ class Tetris:
     def get_field_array(self):
         return [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
     
+    def is_game_over(self):
+        if self.tetromino.blocks[0].pos.y == INIT_POS_OFFSET[1]:
+            pg.time.wait(300)
+            return True
+
     def check_tetromino_landing(self):
         if self.tetromino.landing:
-            self.speed_up = False
-            self.put_tetromino_blocks_in_array()
-            self.next_tetromino.current = True
-            self.tetromino = self.next_tetromino
-            self.next_tetromino=Tetromino(self,current=False)
+            if self.is_game_over():
+                self.__init__(self.app)
+            else:
+                self.speed_up = False
+                self.put_tetromino_blocks_in_array()
+                self.next_tetromino.current = True
+                self.tetromino = self.next_tetromino
+                self.next_tetromino=Tetromino(self,current=False)
 
     def control(self,pressed_key):
         if pressed_key == pg.K_LEFT:
