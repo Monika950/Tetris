@@ -10,10 +10,11 @@ class Text:
         img1 = self.font.render('TETRIS',True,'white')
         img2 = self.font.render('NEXT',True,'white')
         img3 = self.font.render('SCORE',True,'white')
-        img4 = self.font.render('000',True,'white')
+        img4 = self.font.render(f'{self.app.tetris.score}',True,'white')
         self.app.screen.blit(img1,(WIN_W*0.625, WIN_H*0.025))
         self.app.screen.blit(img2,(WIN_W*0.67, WIN_H*0.2))
-        self.app.screen.blit(img3,(WIN_W*0.625, WIN_H*0.6))
+        self.app.screen.blit(img3,(WIN_W*0.625, WIN_H*0.62))
+        self.app.screen.blit(img4,(WIN_W*0.77, WIN_H*0.75))
 
 class Tetris:
     def __init__(self,app):
@@ -23,6 +24,14 @@ class Tetris:
         self.tetromino = Tetromino(self)
         self.next_tetromino = Tetromino(self,current= False)
         self.speed_up = False
+
+        self.score=0
+        self.full_lines=0
+        self.points_per_lines={0:0,1:100,2:300,3:700,4:1500}
+    
+    def get_score(self):
+        self.score+=self.points_per_lines[self.full_lines]
+        self.full_lines=0
     
     def check_full_lines(self): 
         row = FIELD_H-1
@@ -38,6 +47,8 @@ class Tetris:
                 for x in range(FIELD_W):
                     self.field_array[row][x].alive = False
                     self.field_array[row][x]=0
+                
+                self.full_lines+=1
 
     def put_tetromino_blocks_in_array(self):
         for block in self.tetromino.blocks:
@@ -86,6 +97,7 @@ class Tetris:
             self.check_full_lines()
             self.tetromino.update()
             self.check_tetromino_landing()
+            self.get_score()
         self.sprite_group.update()
 
     def draw(self):

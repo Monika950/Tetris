@@ -8,7 +8,7 @@ BG_COLOR = (24,79,115)
 
 COLORS = ['orange', 'pink','green','purple','red','blue','yellow','brown']
 
-ANIM_TIME_INTERVAL =170
+ANIM_TIME_INTERVAL =200
 FAST_ANIM_TIME_INTERVAL =15
 
 TILE_SIZE = 40
