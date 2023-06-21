@@ -2,10 +2,17 @@ from settings import *
 from tetris import Tetris, Text
 import sys
 import pathlib
+import pygame as pg
+from pygame import mixer
 
 
 class App:
     def __init__(self):
+        mixer.init()
+        mixer.music.load('tetris.mp3')  
+        mixer.music.set_volume(0.5)  
+
+
         pg.init()
         pg.display.set_caption('Tetris')
         self.screen = pg.display.set_mode(WIN_RES)
@@ -46,6 +53,7 @@ class App:
         self.fast_anim_trigger = False
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                mixer.music.stop()
                 pg.quit()
                 sys.exit()
             elif event.type == pg.KEYDOWN:
@@ -56,6 +64,7 @@ class App:
                 self.fast_anim_trigger = True
 
     def run(self):
+        mixer.music.play(-1)  
         while True:
             self.check_events()
             self.update()
