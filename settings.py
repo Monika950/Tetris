@@ -6,9 +6,11 @@ FPS = 60
 FIELD_COLOR = (48, 39, 32)
 BG_COLOR = (24,79,115)
 
+SPR_DIR='assets/sprites'
+
 COLORS = ['orange', 'pink','green','purple','red','blue','yellow','brown']
 
-ANIM_TIME_INTERVAL =200
+ANIM_TIME_INTERVAL =250
 FAST_ANIM_TIME_INTERVAL =15
 
 TILE_SIZE = 40
